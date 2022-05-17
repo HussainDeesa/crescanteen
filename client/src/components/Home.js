@@ -1,7 +1,8 @@
 import { Menu } from './Menu'
 import { useNavigate } from 'react-router-dom';
 import React, { useState,useContext } from 'react';
-import appContext from '../context/appContext'
+import appContext from '../context/appContext';
+import Login from './Login'
 export default function Home(props) {
     const { setprogress, showAlert, alert } = props;
     const context = useContext(appContext)
@@ -23,7 +24,8 @@ export default function Home(props) {
  
     return (
         <div>
-            <Menu setprogress={setprogress} showAlert={showAlert} alert={alert} />
+            
+            {localStorage.getItem('token')?<Menu setprogress={setprogress} showAlert={showAlert} alert={alert} />:<Login setprogress={setprogress} alert={alert}/>}
         </div>
     )
 }
