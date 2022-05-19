@@ -10,8 +10,8 @@ const { body, validationResult } = require('express-validator');
 router.get('/fetchallcartitems', fetchuser, async (req, res) => {
     try {
         // let Carts;
-        let Foods
-        let Food =[{
+        let Foods=[]
+        let Food = [{
             name: '',
             quantity: '',
         }];
@@ -34,14 +34,11 @@ router.get('/fetchallcartitems', fetchuser, async (req, res) => {
         // })
         const Carts = await Cart.find({ user: req.user.id })
         for (let i = 0; i < Carts.length; i++) {
-            Foods = await Menu.find({ _id: Carts[i].food_id })
-            Food_id = await Foods._id
-            Food[0].name = await Menu.find({ Food_id }, { "name": 1,"price":1 })
-            Food[0].quantity= await Cart.find({ user: req.user.id },{"quantity":1})
-         }
-       
+            Foods[i] = await Menu.find({ _id: Carts[i].food_id })
+            Food[0].quantity = await Cart.find({ user: req.user.id }, { "quantity": 1 })
+        }
         const cart_count = await Cart.find({ user: req.user.id }).countDocuments()
-        res.json({ Carts, cart_count, Food })
+        res.json({ Carts, cart_count, Food,Foods })
 
     } catch (error) {
         console.error(error.message)
@@ -79,6 +76,50 @@ router.post('/addtocart', fetchuser,
         }
 
     })
+router.delete('/deletenote/:id', fetchuser, async (req, res) => {
+    try {
+
+
+        // Find thee note to be deleted
+        let note = await Note.findById(req.params.id)
+        if (!note) { return res.status(404).send("Not Found") }
+
+        // Allow deletion only if user owns the note
+        if (note.user.toString() !== req.user.id) {
+            return res.status(401).send("Not Allowed")
+        }
+
+        note = await Note.findByIdAndDelete(req.params.id)
+        res.json({ "success": "Deleted successfully", note: note })
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send("Some Error Occured")
+        return
+    }
+})
+
+router.delete('/deletecart/:id', fetchuser, async (req, res) => {
+    try {
+
+
+        // Find thee note to be deleted
+        let cart = await Cart.findById(req.params.id)
+        if (!cart) { return res.status(404).send("Not Found") }
+
+        // Allow deletion only if user owns the note
+        if (cart.user.toString() !== req.user.id) {
+            return res.status(401).send("Not Allowed")
+        }
+
+        cart = await Cart.findByIdAndDelete(req.params.id)
+        res.json({ "success": "Deleted successfully", cart: cart })
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send("Some Error Occured")
+        return
+    }
+})
+
 
 //ROUTE:3 Update note using PUT: api/notes/updatenote
 router.put('/updatenote/:id', fetchuser, async (req, res) => {

@@ -7,6 +7,7 @@ const MenuState = (props) => {
    const Initial = []
    const [menu, setMenu] = useState(Initial)
    const [cart, setCart] = useState(Initial)
+   const [cartfood, setCartFood] = useState(Initial)
    const [cartCount, setCartCount] = useState('')
 
    // Fetch All note
@@ -63,6 +64,24 @@ const MenuState = (props) => {
       const json=await response.json()
       setCartCount(json.cart_count)
       setCart(json.Food) 
+      setCartFood(json.Foods) 
+   }
+   // DELETE cart
+   const deleteCart = async (id) => {
+      // API Call
+      const response = await fetch(`api/cart/deletecart/${id}`, {
+         method: 'DELETE',
+         headers: {
+            'Content-Type': 'application/json',
+            'auth-token': localStorage.getItem('token')
+         },
+
+      });
+      const json = await response.json()
+      
+
+      // const newNote = notes.filter((note) => { return note._id !== id })
+      // setNotes(newNote)
    }
 
    // ADD note
@@ -129,7 +148,7 @@ const MenuState = (props) => {
    
    return (
       // <noteContext.Provider value={{ menu, addNote, deleteNote, editNote,getallnotes,getallmenu }}>
-      <appContext.Provider value={{menu,getallmenu,addToCart,getallcartitems,cartCount,cart }}>
+      <appContext.Provider value={{menu,getallmenu,addToCart,getallcartitems,cartCount,cart,cartfood }}>
          {props.children}
       </appContext.Provider>
    )
