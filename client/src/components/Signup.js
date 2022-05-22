@@ -65,7 +65,7 @@ const Signup = (props) => {
 
                         <label htmlFor="phone" className="form-label">Phone Number </label>
                         <div className='d-flex ' id='phone-block'>
-                            <input type="phone" oninvalid="setCustomValidity('Phone number should be of 10 digits')" oninput="setCustomValidity('')" minLength={10} maxLength={10} onChange={handleOnChange} className="form-control" onKeyUp={(e) => {
+                            <input type="number" oninvalid="setCustomValidity('Phone number should be of 10 digits')" oninput="setCustomValidity('')" minLength={10} maxLength={10} onChange={handleOnChange} className="form-control" onKeyUp={(e) => {
                                 e.target.disabled = false
                                 if (e.target.value.length === 10)
                                     e.target.disabled = true;

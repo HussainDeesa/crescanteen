@@ -1,8 +1,9 @@
 const mongoose = require('mongoose')
-const username = encodeURIComponent("Hussain");
-const password = encodeURIComponent("Hussain@7860");
-
-const mongoURi=`mongodb+srv://${username}:${password}@cluster0.9murf.mongodb.net/Crescanteen?retryWrites=true&w=majority`
+require('dotenv').config();
+const username = encodeURIComponent(process.env.REACT_APP_MONGO_USERNAME);
+const password = encodeURIComponent(process.env.REACT_APP_MONGO_PASSWORD);
+const Appname=process.env.REACT_APP_MONGO_APPNAME
+const mongoURi=`mongodb+srv://${username}:${password}@cluster0.9murf.mongodb.net/${Appname}?retryWrites=true&w=majority`
 const connectToMongo = () => {
     mongoose.connect(mongoURi, {
     }).then(() => {
@@ -10,5 +11,5 @@ const connectToMongo = () => {
     }).catch((e) => {
         console.log(e, 'not connected');
     });
-}
+} 
 module.exports = connectToMongo

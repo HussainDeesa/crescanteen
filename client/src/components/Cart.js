@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import CartItem from './CartItem'
 import { Link } from 'react-router-dom'
 import appContext from '../context/appContext'
+import CartOrderBar from './CartOrderBar'
 const Cart = (props) => {
 
     const { setprogress, showAlert, alert } = props
@@ -11,6 +12,7 @@ const Cart = (props) => {
     const runCallback = (cb) => {
         return cb();
     };
+    let total_price=0;
 
     useEffect(() => {
         getallcartitems()
@@ -27,12 +29,15 @@ const Cart = (props) => {
                     let j = -1
                     return element['quantity'].map((i) => {
                         j++
+                        total_price+=cartfood[j][0].price*i.quantity
                         return <CartItem key={i._id} name={cartfood} position={j} quantity={i.quantity} Carts={Carts[j]} setprogress={setprogress} />
                     })
                 })
-
-                }
+            }
             </div>
+            <br/>
+            <br/>
+            <CartOrderBar total={total_price}/>
         </>
     )
 }

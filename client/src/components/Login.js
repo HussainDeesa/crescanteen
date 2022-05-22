@@ -48,7 +48,7 @@ const Login = (props) => {
                     <form onSubmit={handleSubmit}>
                         <label htmlFor="phone" className="form-label">Phone Number</label>
                         <div className='d-flex ' id='phone-block'>
-                        <input type="phone" value={crediantials.phone} onChange={handleOnChange} maxLength="10" minLength='10' className="form-control" id="phone" name="phone" onKeyDown={(e) => {
+                        <input type="number" value={crediantials.phone} onChange={handleOnChange} maxLength="10" minLength='10' className="form-control" id="phone" name="phone" onKeyUp={(e) => {
                             e.target.disabled = false
                             if (e.target.value.length === 10)
                                 e.target.disabled = true;
