@@ -35,7 +35,7 @@ function App() {
         <Navbar />
         <div className='container'>
         <LoadingBar
-          color='#fbff00'
+          color='#ff9400'
           progress={progress}
         />
           <Routes>

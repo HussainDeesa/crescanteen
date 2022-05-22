@@ -8,6 +8,7 @@ const MenuState = (props) => {
    const [menu, setMenu] = useState(Initial)
    const [cart, setCart] = useState(Initial)
    const [cartfood, setCartFood] = useState(Initial)
+   const [Carts, setCarts] = useState(Initial)
    const [cartCount, setCartCount] = useState('')
 
    // Fetch All note
@@ -64,6 +65,7 @@ const MenuState = (props) => {
       const json=await response.json()
       setCartCount(json.cart_count)
       setCart(json.Food) 
+      setCarts(json.Carts)
       setCartFood(json.Foods) 
    }
    // DELETE cart
@@ -78,10 +80,8 @@ const MenuState = (props) => {
 
       });
       const json = await response.json()
-      
+      await getallcartitems();
 
-      // const newNote = notes.filter((note) => { return note._id !== id })
-      // setNotes(newNote)
    }
 
    // ADD note
@@ -148,7 +148,7 @@ const MenuState = (props) => {
    
    return (
       // <noteContext.Provider value={{ menu, addNote, deleteNote, editNote,getallnotes,getallmenu }}>
-      <appContext.Provider value={{menu,getallmenu,addToCart,getallcartitems,cartCount,cart,cartfood }}>
+      <appContext.Provider value={{menu,getallmenu,addToCart,getallcartitems,cartCount,cart,cartfood,Carts,deleteCart }}>
          {props.children}
       </appContext.Provider>
    )

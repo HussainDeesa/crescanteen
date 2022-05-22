@@ -4,14 +4,30 @@ import appContext from "../context/appContext"
 const MenuItem = (props) => {
     const Context = useContext(appContext)
     const { getallmenu, getallcartitems } = Context
-    const { menu,setprogress } = props;
+    const { menu, setprogress } = props;
     const [cart, setCart] = useState({ food_id: '', quantity: '1' })
-   
+    const add_to_cart = document.querySelectorAll('.add-to-cart-btn')
     // getallcartitems();
+    let handleAddToCart
     const handleOnChange = (e) => {
         setCart({ ...cart, [e.target.name]: e.target.value })
-
     }
+    add_to_cart.forEach(button=>button.addEventListener('click',()=>{
+        button.classList.remove('add-to-cart-btn');
+        button.classList.add('adding-to-cart');
+        button.innerHTML='Adding..'
+         handleAddToCart = (id) => {
+            setprogress(25)
+            // e.preventDefault()
+            addToCart(id, () => {
+            })
+            setTimeout(() => {
+                button.classList.remove('adding-to-cart');
+                button.classList.add('add-to-cart-btn');
+                button.innerHTML='Add To Cart'
+            }, 2000);
+        }
+    }))
     const addToCart = async (id) => {
         const response = await fetch(`api/cart/addtocart`, {
             method: 'POST',
@@ -28,14 +44,7 @@ const MenuItem = (props) => {
             setprogress(100)
         }, addToCart);
     }
-    const handleAddToCart = (id) => {
-        setprogress(25)
-        // e.preventDefault()
-            addToCart(id, () => {
-            })
-        
-        // console.log('clicked add to cart');
-    }
+   
     return (
         <div className="card menu-card" style={{ width: '18rem' }}>
             <img src={menu.image} className="card-img-top menu-img" alt="..." />
@@ -48,7 +57,7 @@ const MenuItem = (props) => {
                 <p className="card-text" id='price'>Price: ₹{menu.price}</p>
                 <form >
                     <label htmlFor="description" className="label-quantity">Quantity: </label>
-                    <select value={cart.quantity} className='input-quantity' name='quantity'onChange={handleOnChange} required>
+                    <select value={cart.quantity} className='input-quantity' name='quantity' onChange={handleOnChange} required>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -60,12 +69,13 @@ const MenuItem = (props) => {
                         <option value="9">9</option>
                         <option value="10">10</option>
                     </select>
-                 
                     <div className='add-to-cart '>
-                        <a href="#" className="btn btn-primary add-to-cart-btn" onClick={() => { handleAddToCart(menu._id)}} >Add to cart</a></div>
+                        <a href="#" className="btn btn-primary add-to-cart-btn " onClick={() => {
+                            handleAddToCart(menu._id)
+                        }} >Add to cart</a></div>
                 </form>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
 

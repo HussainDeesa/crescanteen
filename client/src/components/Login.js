@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import { Alert } from './Alert';
+import cross from '../images/cross.png'
 
 const Login = (props) => {
     props.setprogress(0)
     const [crediantials, setCrediantials] = useState({ email: "", password: "" })
+    const phone = document.getElementById('phone')
+    const phone_block = document.getElementById('phone-block')
     let navigate = useNavigate();
     const handleSubmit = async (e) => {
         props.setprogress(10)
@@ -44,7 +47,24 @@ const Login = (props) => {
                 <div className='form'>
                     <form onSubmit={handleSubmit}>
                         <label htmlFor="phone" className="form-label">Phone Number</label>
-                        <input type="phone" value={crediantials.phone} onChange={handleOnChange} className="form-control" id="phone" name='phone' required />
+                        <div className='d-flex ' id='phone-block'>
+                        <input type="phone" value={crediantials.phone} onChange={handleOnChange} maxLength="10" minLength='10' className="form-control" id="phone" name="phone" onKeyDown={(e) => {
+                            e.target.disabled = false
+                            if (e.target.value.length === 10)
+                                e.target.disabled = true;
+                            if (e.target.disabled) {
+                                let img = document.createElement('img')
+                                img.setAttribute('class', "cross")
+                                img.setAttribute('src', cross)
+                                phone_block.append(img)
+                                img.addEventListener('click', () => {
+                                    phone.disabled = false
+                                    phone.value = ''
+                                    phone_block.removeChild(img)
+                                })
+                            }
+                        }} required />
+                        </div>
                         <label htmlFor="password" className="form-label">Password</label>
                         <input type="password" value={crediantials.password} onChange={handleOnChange} className="form-control" id="password" name='password' required />
                         {/* <Link to="#" className='forgot'>Forgot?</Link> */}

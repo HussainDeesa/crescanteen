@@ -1,4 +1,4 @@
-import React ,{useContext,useState} from 'react'
+import React ,{useContext,useState,useEffect} from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import '../App.css';
 import appContext from "../context/appContext"
@@ -12,6 +12,10 @@ export default function Navbar() {
   }
   const context = useContext(appContext)
   const {cartCount,getallcartitems}=context
+  useEffect(() => {
+    getallcartitems()
+    // eslint-disable-next-line
+}, [])
   return (
     <div>
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark">

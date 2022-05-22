@@ -15,7 +15,7 @@ let success = false
 router.post('/createuser', [
     body('name', 'Enter valid name of minimum 3 characters').isLength({ min: 3 }),
     body('password', 'Enter a password with atleat 7 characters').isLength({ min: 7 }),
-    body('phone', 'Enter a valid phone number of 10 digits').isLength(10)
+    body('phone', 'Enter a valid phone number of 10 digits').isLength({max:10,min:10})
 ], async (req, res) => {
     // If error occurs then return bad request
     const errors = validationResult(req)
