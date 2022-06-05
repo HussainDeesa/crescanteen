@@ -28,7 +28,7 @@ const MenuItem = (props) => {
             }, 2000);
         }
     }))
-    const addToCart = async (id) => {
+    const addToCart = async (id,e) => {
         const response = await fetch(`api/cart/addtocart`, {
             method: 'POST',
             headers: {
@@ -38,6 +38,9 @@ const MenuItem = (props) => {
             },
             body: JSON.stringify({ food_id: id, quantity: cart.quantity })
         });
+        console.log(add_to_cart.value);
+       
+
         setprogress(85)
         setTimeout(() => {
             getallcartitems()

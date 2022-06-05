@@ -23,7 +23,7 @@ const Cart = (props) => {
             <div  >
                 <h1 className='cart'>Cart</h1>
             </div>
-            {cartCount === 0 && <div className='cart-empty'><span>Cart is empty..<br /><Link className='continue-shopping' to='/'>Continue Shopping</Link></span>  </div>}
+            {cartCount === 0 && <div className='cart-empty'><span>Plate is empty..<br /><Link className='continue-shopping' to='/'>Continue Shopping</Link></span>  </div>}
             <div className='row my-3'>
                 {cartCount !== 0 && cart.map((element) => {
                     let j = -1
