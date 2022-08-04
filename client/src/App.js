@@ -4,10 +4,12 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import React from 'react';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import About from './components/About';
 import Login from './components/Login';
+import Profile from './components/Profile';
 import Signup from './components/Signup';
 import Order from './components/Order';
 import Cart from './components/Cart';
@@ -45,6 +47,7 @@ function App() {
             <Route exact path="/signup" element={<Signup showAlert={showAlert} setprogress={setProgress} alert={alert} />} />
             <Route exact path="/orders" element={<Order showAlert={showAlert} setprogress={setProgress} alert={alert} />} />
             <Route exact path="/cart" element={<Cart showAlert={showAlert} setprogress={setProgress} alert={alert} />} />
+            <Route exact path="/profile" element={<Profile showAlert={showAlert} setprogress={setProgress} alert={alert} />} />
          
           </Routes>
         </div>
